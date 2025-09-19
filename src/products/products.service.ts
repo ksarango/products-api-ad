@@ -131,4 +131,27 @@ export class ProductsService {
 
     return this.productModel.countDocuments(filter);
   }
+
+  async countBy(field: string) {
+    return await this.productModel.aggregate([
+      {
+        $match: {
+          deleted: false,
+        },
+      },
+      {
+        $group: {
+          _id: `$${field}`,
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          [field]: '$_id',
+          count: 1,
+          _id: 0,
+        },
+      },
+    ]);
+  }
 }

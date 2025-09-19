@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ProductsService } from 'src/products/products.service';
-import { PercentageDeletedResponse } from './schemas/zod.schema';
+import {
+  CounterGroupDto,
+  PercentageDeletedResponse,
+} from './schemas/zod.schema';
 
 @Injectable()
 export class ReportsService {
@@ -9,6 +12,7 @@ export class ReportsService {
   async getPerecentageDeleted(): Promise<PercentageDeletedResponse> {
     const total = await this.productService.getCounter();
     const deleted = await this.productService.getCounter(true);
+
     const res = (deleted * 100) / total;
 
     return {
@@ -16,5 +20,9 @@ export class ReportsService {
       deleted,
       percentage: +res.toFixed(2),
     };
+  }
+
+  async getCounterGroup(params: CounterGroupDto) {
+    return this.productService.countBy(params.field);
   }
 }

@@ -1,8 +1,19 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { ReportsService } from './reports.service';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiResponse } from '@nestjs/swagger';
-import { PercentageDeletedResponseDto } from './schemas/zod.schema';
+import { ApiQuery, ApiResponse } from '@nestjs/swagger';
+import {
+  CounterGroupDto,
+  CounterGroupResponseDto,
+  CounterGroupSchema,
+  PercentageDeletedResponseDto,
+} from './schemas/zod.schema';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('api/reports')
@@ -11,7 +22,19 @@ export class ReportsController {
 
   @Get('deleted')
   @ApiResponse({ type: PercentageDeletedResponseDto })
-  findAll() {
+  percentageDeleted() {
     return this.reportService.getPerecentageDeleted();
+  }
+
+  @Get('grouped')
+  @ApiQuery({ type: CounterGroupDto })
+  @ApiResponse({ type: CounterGroupResponseDto })
+  grouped(@Query() query: any) {
+    const filter = CounterGroupSchema.safeParse(query);
+
+    if (!filter.success)
+      throw new BadRequestException(filter.error.flatten().fieldErrors);
+
+    return this.reportService.getCounterGroup(filter.data);
   }
 }

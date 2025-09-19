@@ -10,8 +10,8 @@ services:
     depends_on:
       - mongo
     environment:
-      MONGODB_CONNECTION_URL: mongodb://mongo:27017/nestdb
-      CONTENTFUL_ACCESS_TOKEN: myAccessToken
+      MONGODB_CONNECTION_URL: mongodb://mongo:27017/product-db
+      CONTENTFUL_ACCESS_TOKEN: ${CONTENTFUL_ACCESS_TOKEN}
     volumes:
       - .:/app
       - /app/node_modules

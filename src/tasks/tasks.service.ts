@@ -26,5 +26,6 @@ export class TasksService {
 
     this.schedulerRegistry.addCronJob('syncProducts', job);
     job.start();
+    this.logger.log('SyncProducts CRONJOB start!');
   }
 }

@@ -74,9 +74,10 @@ export class ProductsService {
     if (filters.model) query.model = filters.model;
     if (filters.category) query.category = filters.category;
     if (filters.color) query.color = filters.color;
-    if (filters.priceFrom) query.price = { $gte: filters.priceFrom }
-    if (filters.priceTo) query.price = { $lte: filters.priceTo }
-    if (filters.priceFrom && filters.priceTo) query.price = { $gte: filters.priceFrom, $lte: filters.priceTo }
+    if (filters.priceFrom) query.price = { $gte: filters.priceFrom };
+    if (filters.priceTo) query.price = { $lte: filters.priceTo };
+    if (filters.priceFrom && filters.priceTo)
+      query.price = { $gte: filters.priceFrom, $lte: filters.priceTo };
 
     const skip = (page - 1) * limit;
     const [products, total] = await Promise.all([

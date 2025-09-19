@@ -8,13 +8,20 @@ import {
   HttpCode,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
-import { FilterProductSchema } from './schemas/zod.schema';
+import {
+  FilterProductSchema,
+  FilterProductDto,
+  ListProductsResponseDto,
+} from './schemas/zod.schema';
+import { ApiQuery, ApiResponse } from '@nestjs/swagger';
 
 @Controller('api/products')
 export class ProductsController {
   constructor(private readonly productService: ProductsService) {}
 
   @Get()
+  @ApiQuery({ type: FilterProductDto })
+  @ApiResponse({ type: ListProductsResponseDto })
   findAll(@Query() query: any) {
     const filters = FilterProductSchema.safeParse(query);
 

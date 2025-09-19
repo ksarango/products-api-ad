@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { createZodDto } from 'nestjs-zod';
 
 const PaginationSchema = z.object({
   total: z.number(),
@@ -54,4 +55,8 @@ export const FilterProductSchema = z.object({
 export type ContentfulResponse = z.infer<typeof ContentfulResponseSchema>;
 export type ListProductsResponse = z.infer<typeof ListProductsResponseSchema>;
 export type ProductData = z.infer<typeof ProductSchema>;
-export type FilterProductDto = z.infer<typeof FilterProductSchema>;
+
+export class FilterProductDto extends createZodDto(FilterProductSchema) {}
+export class ListProductsResponseDto extends createZodDto(
+  ListProductsResponseSchema,
+) {}

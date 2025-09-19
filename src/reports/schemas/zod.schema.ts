@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { createZodDto } from 'nestjs-zod';
 
 export const PercentageDeletedResponseSchema = z.object({
   total: z.number(),
@@ -9,3 +10,7 @@ export const PercentageDeletedResponseSchema = z.object({
 export type PercentageDeletedResponse = z.infer<
   typeof PercentageDeletedResponseSchema
 >;
+
+export class PercentageDeletedResponseDto extends createZodDto(
+  PercentageDeletedResponseSchema,
+) {}

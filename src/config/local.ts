@@ -19,6 +19,6 @@ export default (): AppConfig => ({
     },
   },
   crons: {
-    syncProducts: '0 0 * * * *', // every minute
+    syncProducts:  '0 0 * * * *', // every hour
   },
 });

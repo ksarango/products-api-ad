@@ -66,7 +66,7 @@ To build app is required `CONTENTFUL_ACCESS_TOKEN` env var this value you can fo
 $ make build-app
 
 # 2. Run app
-$ make run-app
+$ make up-app
 
 # 3. Sync products to retrieve data
 $ make sync-products

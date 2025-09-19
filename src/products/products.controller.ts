@@ -6,12 +6,14 @@ import {
   Query,
   BadRequestException,
   HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import {
   FilterProductSchema,
   FilterProductDto,
   ListProductsResponseDto,
+  ProductResponseDto,
 } from './schemas/zod.schema';
 import { ApiQuery, ApiResponse } from '@nestjs/swagger';
 
@@ -21,7 +23,7 @@ export class ProductsController {
 
   @Get()
   @ApiQuery({ type: FilterProductDto })
-  @ApiResponse({ type: ListProductsResponseDto })
+  @ApiResponse({ status: HttpStatus.OK, type: ListProductsResponseDto })
   findAll(@Query() query: any) {
     const filters = FilterProductSchema.safeParse(query);
 
@@ -32,12 +34,28 @@ export class ProductsController {
   }
 
   @Get(':id')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: ProductResponseDto,
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Product not found.',
+  })
   findOne(@Param('id') id: string) {
     return this.productService.findOne(id);
   }
 
   @Delete(':id')
   @HttpCode(204)
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Product not found.',
+  })
+  @ApiResponse({
+    status: HttpStatus.NO_CONTENT,
+    description: 'Product deleted success.',
+  })
   async remove(@Param('id') id: string) {
     await this.productService.remove(id);
 

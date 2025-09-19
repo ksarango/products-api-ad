@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Controller,
   Get,
+  HttpStatus,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -21,14 +22,14 @@ export class ReportsController {
   constructor(private readonly reportService: ReportsService) {}
 
   @Get('deleted')
-  @ApiResponse({ type: PercentageDeletedResponseDto })
+  @ApiResponse({ status: HttpStatus.OK, type: PercentageDeletedResponseDto })
   percentageDeleted() {
     return this.reportService.getPerecentageDeleted();
   }
 
   @Get('grouped')
   @ApiQuery({ type: CounterGroupDto })
-  @ApiResponse({ type: CounterGroupResponseDto })
+  @ApiResponse({ status: HttpStatus.OK, type: CounterGroupResponseDto })
   grouped(@Query() query: any) {
     const filter = CounterGroupSchema.safeParse(query);
 

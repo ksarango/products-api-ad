@@ -56,6 +56,7 @@ export type ContentfulResponse = z.infer<typeof ContentfulResponseSchema>;
 export type ListProductsResponse = z.infer<typeof ListProductsResponseSchema>;
 export type ProductData = z.infer<typeof ProductSchema>;
 
+export class ProductResponseDto extends createZodDto(ProductSchema) {}
 export class FilterProductDto extends createZodDto(FilterProductSchema) {}
 export class ListProductsResponseDto extends createZodDto(
   ListProductsResponseSchema,

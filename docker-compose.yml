@@ -12,9 +12,6 @@ services:
     environment:
       MONGODB_CONNECTION_URL: mongodb://mongo:27017/product-db
       CONTENTFUL_ACCESS_TOKEN: ${CONTENTFUL_ACCESS_TOKEN}
-    volumes:
-      - .:/app
-      - /app/node_modules
 
   mongo:
     image: mongo:6

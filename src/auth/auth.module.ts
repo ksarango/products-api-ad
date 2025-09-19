@@ -9,8 +9,8 @@ import { JwtStrategy } from './auth.strategy';
   imports: [
     PassportModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET || 'superSecretKey', // Use environment variable for secret
-      signOptions: { expiresIn: '60s' }, // Token expiration
+      secret: process.env.JWT_SECRET || 'superSecretKey',
+      signOptions: { expiresIn: '1h' },
     }),
   ],
   providers: [AuthService, JwtStrategy],

@@ -52,8 +52,16 @@ export const FilterProductSchema = z.object({
   limit: z.coerce.number().min(1).max(100).default(5).optional(),
 });
 
+export const CounterDataSchema = z.object({
+  count: z.number(),
+  field: z.string(),
+});
+
+export const CounterGroupResponseSchema = z.array(CounterDataSchema);
+
 export type ContentfulResponse = z.infer<typeof ContentfulResponseSchema>;
 export type ListProductsResponse = z.infer<typeof ListProductsResponseSchema>;
+export type CounterGroupResponse = z.infer<typeof CounterGroupResponseSchema>;
 export type ProductData = z.infer<typeof ProductSchema>;
 
 export class ProductResponseDto extends createZodDto(ProductSchema) {}

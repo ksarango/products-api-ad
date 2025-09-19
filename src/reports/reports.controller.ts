@@ -11,7 +11,6 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import {
   CounterGroupDto,
-  CounterGroupResponseDto,
   CounterGroupSchema,
   PercentageDeletedResponseDto,
 } from './schemas/zod.schema';
@@ -30,7 +29,7 @@ export class ReportsController {
 
   @Get('grouped')
   @ApiQuery({ type: CounterGroupDto })
-  @ApiResponse({ status: HttpStatus.OK, type: CounterGroupResponseDto })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Counter data' })
   grouped(@Query() query: any) {
     const filter = CounterGroupSchema.safeParse(query);
 

@@ -12,6 +12,7 @@ import { Model } from 'mongoose';
 import { Product, ProductDocument } from './schemas/product.schema';
 import { CreateProductDto } from './dto/create-product.dto';
 import {
+  CounterGroupResponse,
   FilterProductDto,
   ListProductsResponse,
   ProductData,
@@ -132,8 +133,8 @@ export class ProductsService {
     return this.productModel.countDocuments(filter);
   }
 
-  async countBy(field: string) {
-    return await this.productModel.aggregate([
+  async countBy(field: string): Promise<CounterGroupResponse> {
+    const counter = await this.productModel.aggregate([
       {
         $match: {
           deleted: false,
@@ -153,5 +154,12 @@ export class ProductsService {
         },
       },
     ]);
+
+    return counter.map((data: { count: number; [field]: string }) => {
+      return {
+        count: data.count,
+        field: String(data[field]),
+      };
+    });
   }
 }

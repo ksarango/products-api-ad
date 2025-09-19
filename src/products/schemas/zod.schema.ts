@@ -45,6 +45,8 @@ export const FilterProductSchema = z.object({
   model: z.string().optional(),
   category: z.string().optional(),
   color: z.string().optional(),
+  priceFrom: z.coerce.number().optional(),
+  priceTo: z.coerce.number().optional(),
   page: z.coerce.number().min(1).default(1).optional(),
   limit: z.coerce.number().min(1).max(100).default(5).optional(),
 });

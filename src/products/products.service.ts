@@ -68,7 +68,15 @@ export class ProductsService {
     const { page = 1, limit = 5 } = filters;
     const query: Record<string, any> = { deleted: false };
 
+    if (filters.sku) query.sku = filters.sku;
     if (filters.name) query.name = { $regex: filters.name, $options: 'i' };
+    if (filters.brand) query.brand = filters.brand;
+    if (filters.model) query.model = filters.model;
+    if (filters.category) query.category = filters.category;
+    if (filters.color) query.color = filters.color;
+    if (filters.priceFrom) query.price = { $gte: filters.priceFrom }
+    if (filters.priceTo) query.price = { $lte: filters.priceTo }
+    if (filters.priceFrom && filters.priceTo) query.price = { $gte: filters.priceFrom, $lte: filters.priceTo }
 
     const skip = (page - 1) * limit;
     const [products, total] = await Promise.all([

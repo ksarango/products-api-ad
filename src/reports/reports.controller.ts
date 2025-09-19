@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { ReportsService } from './reports.service';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiQuery, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import {
   CounterGroupDto,
   CounterGroupResponseDto,
@@ -18,6 +18,7 @@ import {
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('api/reports')
+@ApiBearerAuth('access-token')
 export class ReportsController {
   constructor(private readonly reportService: ReportsService) {}
 
